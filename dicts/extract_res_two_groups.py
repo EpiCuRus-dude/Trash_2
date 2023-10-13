@@ -39,3 +39,10 @@ for i in range(len(A['true'])):
         group_2_dict['pred'].append(pred_label)
 
 group_1_dict, group_2_dict
+
+
+# Add a new key to store the general IDs of labels in each group
+group_1_dict['general_ids'] = list(flattened_group_labels[1].values())
+group_2_dict['general_ids'] = list(flattened_group_labels[2].values())
+
+group_1_dict, group_2_dict
