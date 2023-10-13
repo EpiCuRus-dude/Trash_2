@@ -1,56 +1,41 @@
-group_labels = {
-    1: [{'apple': '1', 'banana': '2'}, {'apple': '3', 'grapes': '4'}],
-    2: [{'orange': '5', 'peach': '6'}, {'pear': '7', 'orange': '8'}]
-}
+# Initialize dictionaries for each group
+group_1_dict = {'true': [], 'pred': [], 'ids': []}
+group_2_dict = {'true': [], 'pred': [], 'ids': []}
 
+# The new A dictionary
 A = {
-    'true': {
-        1: ['apple', 'apple', 'banana', 'grapes'],
-        2: ['orange', 'peach', 'pear', 'orange']
-    },
-    'pred': {
-        1: ['banana', 'apple', 'apple', 'grapes'],
-        2: ['peach', 'orange', 'pear', 'orange']
-    }
-}
-from collections import defaultdict
-
-# Example dictionaries
-group_labels = {
-    1: [{'apple': '1', 'banana': '2'}, {'apple': '3', 'grapes': '4'}],
-    2: [{'orange': '5', 'peach': '6'}, {'pear': '7', 'orange': '8'}]
+    'true': ['apple', 'apple', 'banana', 'grapes', 'orange', 'peach', 'pear', 'orange'],
+    'pred': ['banana', 'apple', 'apple', 'grapes', 'peach', 'orange', 'pear', 'orange']
 }
 
-A = {
-    'true': {
-        1: ['apple', 'apple', 'banana', 'grapes'],
-        2: ['orange', 'peach', 'pear', 'orange']
-    },
-    'pred': {
-        1: ['banana', 'apple', 'apple', 'grapes'],
-        2: ['peach', 'orange', 'pear', 'orange']
-    }
-}
+# Flatten the group_labels for easier searching
+flattened_group_labels = {group: {k: v for d in dicts for k, v in d.items()} for group, dicts in group_labels.items()}
 
-# Initialize the dictionaries for each group
-group_1_dict = defaultdict(list)
-group_2_dict = defaultdict(list)
+# Helper function to identify the group and ID of a label
+def identify_group_and_id(label):
+    for group, labels in flattened_group_labels.items():
+        if label in labels:
+            return group, labels[label]
+    return None, None
 
-# Helper function to fill the dictionary for each group
-def fill_group_dict(group_dict, group_number):
-    for label_type in ['true', 'pred']:
-        group_dict[label_type] = A[label_type][group_number]
+# Populate group dictionaries
+for i in range(len(A['true'])):
+    true_label, pred_label = A['true'][i], A['pred'][i]
     
-    group_dict['ids'] = []
-    for label in A['true'][group_number]:
-        for label_dict in group_labels[group_number]:
-            if label in label_dict:
-                group_dict['ids'].append(label_dict[label])
-
-# Fill the dictionaries
-fill_group_dict(group_1_dict, 1)
-fill_group_dict(group_2_dict, 2)
+    # For true label
+    group, label_id = identify_group_and_id(true_label)
+    if group == 1:
+        group_1_dict['true'].append(true_label)
+        group_1_dict['ids'].append(label_id)
+    elif group == 2:
+        group_2_dict['true'].append(true_label)
+        group_2_dict['ids'].append(label_id)
+        
+    # For pred label
+    group, label_id = identify_group_and_id(pred_label)
+    if group == 1:
+        group_1_dict['pred'].append(pred_label)
+    elif group == 2:
+        group_2_dict['pred'].append(pred_label)
 
 group_1_dict, group_2_dict
-
-
