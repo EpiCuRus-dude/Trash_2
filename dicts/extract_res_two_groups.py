@@ -1,24 +1,17 @@
-# Initialize dictionaries for each group
+# Update the group_labels dictionary
+group_labels = {
+    1: [{'apple': '1'}, {'banana': '2'}, {'grapes': '4'}],
+    2: [{'orange': '5'}, {'peach': '6'}, {'pear': '7'}, {'orange': '8'}]
+}
+
+# Re-flatten the group_labels for easier searching
+flattened_group_labels = {group: {k: v for d in dicts for k, v in d.items()} for group, dicts in group_labels.items()}
+
+# Initialize dictionaries for each group again
 group_1_dict = {'true': [], 'pred': [], 'ids': []}
 group_2_dict = {'true': [], 'pred': [], 'ids': []}
 
-# The new A dictionary
-A = {
-    'true': ['apple', 'apple', 'banana', 'grapes', 'orange', 'peach', 'pear', 'orange'],
-    'pred': ['banana', 'apple', 'apple', 'grapes', 'peach', 'orange', 'pear', 'orange']
-}
-
-# Flatten the group_labels for easier searching
-flattened_group_labels = {group: {k: v for d in dicts for k, v in d.items()} for group, dicts in group_labels.items()}
-
-# Helper function to identify the group and ID of a label
-def identify_group_and_id(label):
-    for group, labels in flattened_group_labels.items():
-        if label in labels:
-            return group, labels[label]
-    return None, None
-
-# Populate group dictionaries
+# Re-populate group dictionaries
 for i in range(len(A['true'])):
     true_label, pred_label = A['true'][i], A['pred'][i]
     
@@ -38,10 +31,7 @@ for i in range(len(A['true'])):
     elif group == 2:
         group_2_dict['pred'].append(pred_label)
 
-group_1_dict, group_2_dict
-
-
-# Add a new key to store the general IDs of labels in each group
+# Add general IDs to the dictionaries
 group_1_dict['general_ids'] = list(flattened_group_labels[1].values())
 group_2_dict['general_ids'] = list(flattened_group_labels[2].values())
 
