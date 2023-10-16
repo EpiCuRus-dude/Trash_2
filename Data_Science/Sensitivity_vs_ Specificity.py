@@ -67,3 +67,62 @@ plt.title('Sensitivity and Specificity vs. Threshold for a Three-Class Problem')
 plt.legend()
 plt.grid(True)
 plt.show()
+
+
+#### imbalanced dtataset example
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+
+# Generate synthetic data for a three-class problem (imbalanced)
+np.random.seed(0)
+num_samples = 1000
+true_labels = np.random.choice([0, 1, 2], num_samples, p=[0.8, 0.1, 0.1])
+predicted_scores = np.random.rand(num_samples, 3)  # Random scores for each class
+
+# Create a DataFrame
+data = {'True Class': true_labels}
+for i in range(3):
+    data[f'Predicted Score Class {i}'] = predicted_scores[:, i]
+
+df = pd.DataFrame(data)
+
+# Define a function to calculate sensitivity and specificity for a given threshold
+def calculate_metrics(df, threshold, class_label):
+    predicted_class = (df[f'Predicted Score Class {class_label}'] >= threshold).astype(int)
+    true_positive = ((df['True Class'] == class_label) & (predicted_class == 1)).sum()
+    false_positive = ((df['True Class'] != class_label) & (predicted_class == 1)).sum()
+    true_negative = ((df['True Class'] != class_label) & (predicted_class == 0)).sum()
+    false_negative = ((df['True Class'] == class_label) & (predicted_class == 0)).sum()
+    
+    sensitivity = true_positive / (true_positive + false_negative)
+    specificity = true_negative / (true_negative + false_positive)
+    
+    return sensitivity, specificity
+
+# Define a range of thresholds
+thresholds = np.linspace(0, 1, 100)
+
+# Calculate sensitivity and specificity for each threshold for a specific class (e.g., Class 0)
+class_label_to_plot = 0
+sensitivities = []
+specificities = []
+
+for threshold in thresholds:
+    sensitivity, specificity = calculate_metrics(df, threshold, class_label_to_plot)
+    sensitivities.append(sensitivity)
+    specificities.append(specificity)
+
+# Plot sensitivity and specificity vs. threshold
+plt.figure(figsize=(10, 6))
+plt.plot(thresholds, sensitivities, label=f'Sensitivity (Class {class_label_to_plot})')
+plt.plot(thresholds, specificities, label=f'Specificity (Class {class_label_to_plot})')
+plt.xlabel('Threshold')
+plt.ylabel('Metric Value')
+plt.title('Sensitivity and Specificity vs. Threshold')
+plt.legend()
+plt.grid()
+plt.show()
+
