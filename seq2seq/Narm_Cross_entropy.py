@@ -42,3 +42,34 @@ target = torch.randint(0, 101, (64, 128)).to(device)
 # Compute the Label Smoothed Cross Entropy Loss
 smoothed_loss = smoothed_criterion(logits, target)
 print(smoothed_loss.item())
+
+
+import torch
+import torch.nn.functional as F
+
+def custom_cross_entropy_loss(logits, labels):
+    # Move logits to CUDA device
+    logits = logits.to("cuda:0")
+    
+    # Convert labels to one-hot encoding using F.one_hot
+    one_hot_labels = F.one_hot(labels, num_classes=logits.size(1)).float().to("cuda:0")
+    
+    # Calculate the negative log likelihood
+    log_probs = F.log_softmax(logits, dim=1)
+    loss = -torch.sum(one_hot_labels * log_probs) / logits.size(0)
+    
+    return loss
+
+# Example usage
+# Assuming you have 3 classes and batch size of 4
+num_classes = 3
+batch_size = 4
+
+# Generate some example logits and labels and move logits to CUDA
+logits = torch.randn(batch_size, num_classes).to("cuda:0")
+labels = torch.randint(0, num_classes, (batch_size,))
+
+# Calculate the custom Cross-Entropy Loss on CUDA
+loss = custom_cross_entropy_loss(logits, labels)
+
+print("Custom Cross-Entropy Loss (CUDA) using F.one_hot:", loss.item())
