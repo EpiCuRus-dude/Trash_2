@@ -47,6 +47,7 @@ print(smoothed_loss.item())
 import torch
 import torch.nn.functional as F
 
+# Function to calculate custom Cross-Entropy Loss on CUDA
 def custom_cross_entropy_loss(logits, labels):
     # Move logits to CUDA device
     logits = logits.to("cuda:0")
@@ -65,9 +66,16 @@ def custom_cross_entropy_loss(logits, labels):
 num_classes = 3
 batch_size = 4
 
+seq_l = 128
+
 # Generate some example logits and labels and move logits to CUDA
-logits = torch.randn(batch_size, num_classes).to("cuda:0")
-labels = torch.randint(0, num_classes, (batch_size,))
+logits = torch.randn(batch_size, seq_l, num_classes).to("cuda:0")
+labels = torch.randint(0, num_classes, (batch_size, seq_l))
+
+# Calculate the custom Cross-Entropy Loss on CUDA
+loss = custom_cross_entropy_loss(logits, labels)
+
+print("Custom Cross-Entropy Loss (CUDA) using F.one_hot:", loss.item())
 
 # Calculate the custom Cross-Entropy Loss on CUDA
 loss = custom_cross_entropy_loss(logits, labels)
