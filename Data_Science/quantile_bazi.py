@@ -8,7 +8,7 @@ label_counts_sorted = label_counts.sort_values()
 Xth_quantile = label_counts_sorted.quantile(0.25) 
 Yth_quantile = label_counts_sorted.quantile(0.95) 
 
-
+### Divide Them again
 group1_labels = label_counts_sorted[label_counts_sorted>=Yth_quantile].index.tolist()
 group2_labels = label_counts_sorted[(label_counts_sorted>=Xth_quantile) & (label_counts_sorted<Yth_quantile)].index.tolist()
 
