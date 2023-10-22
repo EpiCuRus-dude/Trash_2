@@ -33,3 +33,28 @@ df = pd.concat([df1, df2], ignore_index=True)
 
 # Show the first few rows of the dataframe
 df.head()
+
+
+from torch.utils.data import Dataset, DataLoader
+import torch
+
+
+
+# Convert the Date column to datetime format and sort the DataFrame by Date
+df_combined['Date'] = pd.to_datetime(df_combined['Date'])
+df_combined.sort_values('Date', inplace=True)
+
+# Create time-based groups (e.g., group by every 3 days)
+time_window = '3D'  # 3 days
+groups = df_combined.groupby(pd.Grouper(key='Date', freq=time_window))
+
+# Create a list of (start, end) indices for each time group
+group_indices = []
+start_idx = 0
+for name, group in groups:
+    end_idx = start_idx + len(group)
+    if len(group) > 0:
+        group_indices.append((start_idx, end_idx))
+    start_idx = end_idx
+
+
