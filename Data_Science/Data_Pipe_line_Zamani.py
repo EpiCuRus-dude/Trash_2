@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-# Generate random data for Jan 2020 to March 2020 (Classes 1 to 5)
+
 start_date1 = datetime.strptime("2020-01-01", "%Y-%m-%d")
 end_date1 = datetime.strptime("2020-03-31", "%Y-%m-%d")
 delta1 = end_date1 - start_date1
@@ -27,6 +27,8 @@ data2 = {
 
 df2 = pd.DataFrame(data2)
 df2 = df2.sort_values(by="date")
+
+## need to be continued
 
 # Combine both dataframes
 df = pd.concat([df1, df2], ignore_index=True)
