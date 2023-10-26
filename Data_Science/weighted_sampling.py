@@ -23,3 +23,5 @@ filtered_df['DaysFromRecent'] = (most_recent_date - filtered_df['Date']).dt.days
 
 
 filtered_df['Weight'] = np.exp(-decay_rate * filtered_df['DaysFromRecent'])
+
+sampled_df = filtered_df.sample(n=N, weights='Weight', random_state=1)
