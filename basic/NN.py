@@ -29,3 +29,33 @@ plt.title("Synthetic Multi-Class Data")
 plt.show()
 
 
+X_tensor = torch.FloatTensor(X).to(device)
+y_tensor = torch.FloatTensor(y).to(device)
+
+
+class MLP(nn.Module):
+  def __init__(self, input_dim, hid_dim, output_dim):
+    super(MLP, self).__init__()
+
+    self.W1 = torch.Parameter(torch.randn(input_dim, hid_dim))
+    self.B1 = torch.Parameter(torch.randn(hid_dim))
+
+    self.W2 = torch.Parameter(torch.randn(hid_dim, output_dim))
+    self.B2 = torch.Parameter(torch.randn(output_dim))
+
+    self.relu = nn.ReLU()
+    self.softmax = nn.Softmax(dim=1)
+
+  def forward(self, x):
+    x = torch.mm(x, self.W1) + self.B1
+    x = self.relu(x)
+
+    x = torch.mm(x, self.W2) + self.B2
+
+    x = self.softmax(x)
+
+    return x
+
+
+
+
