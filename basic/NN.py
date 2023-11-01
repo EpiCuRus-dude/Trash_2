@@ -79,6 +79,22 @@ class MLP(nn.Module):
 
     return x
 
+def manual_cross_entropy_loss(y_pred, y_true):
+  N = y_pred.shape[0]
+  correct_preds = y_pred[range(N), y_true]
+
+
+  loss = -torch.log(correct_preds).mean()
+
+  return loss
+
+# Test the manual cross-entropy loss function
+y_pred = torch.tensor([[0.1, 0.8, 0.1], [0.1, 0.1, 0.8], [0.8, 0.1, 0.1]], dtype=torch.float32)  # Mock predicted probabilities for 3 samples
+y_true = torch.tensor([1, 2, 0], dtype=torch.long)  # Mock true labels for 3 samples
+
+# Compute the manual cross-entropy loss
+manual_loss = manual_cross_entropy_loss(y_pred, y_true)
+print(f"Manual Cross-Entropy Loss: {manual_loss.item()}")
 
 
 
