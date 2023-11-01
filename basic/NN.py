@@ -29,6 +29,29 @@ plt.title("Synthetic Multi-Class Data")
 plt.show()
 
 
+# Initialize the manual MLP
+input_dim = 2  # Input dimension (for demonstration, we use 2D data points)
+hidden_dim = 5  # Number of neurons in the hidden layer
+output_dim = 3  # Output dimension (3 classes for classification)
+
+# Initialize the neural network
+manual_mlp_model = MLP(input_dim, hidden_dim, output_dim).to(device)
+
+# Print the manual MLP model architecture
+print(manual_mlp_model)
+
+# Fetch and display the initial weights and biases
+manual_mlp_initial_weights1 = manual_mlp_model.W1.data.cpu().numpy()
+manual_mlp_initial_bias1 = manual_mlp_model.B1.data.cpu().numpy()
+manual_mlp_initial_weights2 = manual_mlp_model.W2.data.cpu().numpy()
+manual_mlp_initial_bias2 = manual_mlp_model.B2.data.cpu().numpy()
+
+print(f"Manual MLP Initial Weights 1: {manual_mlp_initial_weights1.shape}")
+print(f"Manual MLP Initial Bias 1: {manual_mlp_initial_bias1.shape}")
+print(f"Manual MLP Initial Weights 2: {manual_mlp_initial_weights2.shape}")
+print(f"Manual MLP Initial Bias 2: {manual_mlp_initial_bias2.shape}")
+
+
 X_tensor = torch.FloatTensor(X).to(device)
 y_tensor = torch.FloatTensor(y).to(device)
 
