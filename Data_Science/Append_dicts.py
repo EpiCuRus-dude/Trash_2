@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-# Initialize the master dictionary
+
 master_dict = defaultdict(list)
 
 def update_master_dict(new_dict):
@@ -8,3 +8,7 @@ def update_master_dict(new_dict):
         
         value = value if isinstance(value, list) else [value]
         master_dict[key].extend(value)
+
+
+
+#There are definately better way of doing it definately
