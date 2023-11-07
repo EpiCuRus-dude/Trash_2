@@ -1,6 +1,8 @@
 import torch
 import torch.nn.functional as F
 
+### Study this--Important to understand
+
 
 vocab = ['<pad>', '<eos>', 'i', 'like', 'love', 'cat', 'cats', 'know']
 vocab_size = len(vocab)
