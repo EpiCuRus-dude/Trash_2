@@ -21,3 +21,5 @@ labels_tokens = tokenizer(labels, return_tensors='pt', truncation=True)['input_i
 # Extend the input_ids tensor to match the labels tensor size
 input_ids = torch.cat([inputs['input_ids'], labels_tokens], dim=1)
 
+## Write the loss
+
