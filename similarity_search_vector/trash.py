@@ -1,29 +1,25 @@
 import faiss
 import numpy as np
 
-def normalize_vectors(vectors):
-    
-    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
-    return vectors / np.maximum(norms, 1e-6)
-
 def create_index(vector_dim):
     
     return faiss.IndexFlatIP(vector_dim)
 
 def add_vectors_to_index(index, vectors):
-   
-    normalized_vectors = normalize_vectors(vectors)
-    index.add(normalized_vectors)
+    
+    faiss.normalize_L2(vectors)  # Normalize the vectors in-place
+    index.add(vectors)
 
 def search_vectors(index, query_vectors, k):
     
-    normalized_query_vectors = normalize_vectors(query_vectors)
-    return index.search(normalized_query_vectors, k)
+    faiss.normalize_L2(query_vectors)  # Normalize the query vectors in-place
+    return index.search(query_vectors, k)
 
-# Example usage
-vector_dim = 128  
-num_vectors = 1000  
-k = 10  
+
+vector_dim = 128  # Dimension of the vectors
+num_vectors = 1000  # Number of vectors in the database
+k = 10  # Number of nearest neighbors to find
+
 
 np.random.seed(123)
 db_vectors = np.random.random((num_vectors, vector_dim)).astype('float32')
@@ -31,6 +27,7 @@ query_vectors = np.random.random((5, vector_dim)).astype('float32')
 
 
 index = create_index(vector_dim)
+
 
 add_vectors_to_index(index, db_vectors)
 
