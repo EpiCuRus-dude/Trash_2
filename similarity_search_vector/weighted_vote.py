@@ -5,8 +5,8 @@ def predict_category_weighted(new_title, k=5):
     distances, indices = index.search(new_vector, k=k)
 
     
-    weights = 1 / (1 + distances[0])  # Adding 1 to avoid division by zero
-    weights = softmax(weights)  # Normalize the weights
+    weights = 1 / (1 + distances[0])  
+    weights = softmax(weights)  
 
     
     weighted_category_votes = {}
