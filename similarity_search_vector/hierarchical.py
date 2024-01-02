@@ -1,54 +1,40 @@
-# Does it work?
+from scipy.cluster.hierarchy import ward, fcluster
+from scipy.spatial.distance import pdist
 
-import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer
-import faiss
-from sklearn.cluster import AgglomerativeClustering
-from collections import Counter
-
-
-paper_titles = ["Title 1", "Title 2", ...]  
-categories = ["Math", "Physics", ...]  
-
-
-vectorizer = CountVectorizer()
-X = vectorizer.fit_transform(paper_titles).toarray()
-
-
-index = faiss.IndexFlatL2(X.shape[1])
-index.add(X.astype(np.float32))
-
-def predict_category_hierarchical(new_title, k=10):
+def hierarchical_clustering(embeddings, threshold):
     
-    new_vector = vectorizer.transform([new_title]).toarray().astype(np.float32)
-    
-    
-    _, indices = index.search(new_vector, k)
-    
-    
-    neighbor_embeddings = X[indices[0]]
+    linkage_matrix = ward(pdist(embeddings))
 
-    
-    cluster = AgglomerativeClustering(n_clusters=None, distance_threshold=0.5, linkage='ward')
-    cluster.fit(neighbor_embeddings)
-
-    
-    neighbor_categories = np.array([categories[idx] for idx in indices[0]])
-
-    
-    cluster_categories = {}
-    for cluster_id in np.unique(cluster.labels_):
-        cluster_member_categories = neighbor_categories[cluster.labels_ == cluster_id]
-        most_common_category = Counter(cluster_member_categories).most_common(1)[0][0]
-        cluster_categories[cluster_id] = most_common_category
-
-    
-    largest_cluster_id = Counter(cluster.labels_).most_common(1)[0][0]
-    predicted_category = cluster_categories[largest_cluster_id]
-
-    return predicted_category
+    labels = fcluster(linkage_matrix, threshold, criterion='distance')
+    return labels
 
 
-new_title = "A New Research Paper on Quantum Physics"
-predicted_category = predict_category_hierarchical(new_title, k=10)
-print(f"The predicted category for '{new_title}' is '{predicted_category}'")
+threshold = 1.5  
+
+
+labels = {}
+for category, emb in embeddings.items():
+    labels[category] = hierarchical_clustering(emb, threshold)
+
+
+def compute_centroids(embeddings, labels):
+    unique_labels = np.unique(labels)
+    centroids = np.array([embeddings[labels == label].mean(axis=0) for label in unique_labels])
+    return centroids
+
+
+centroids = {}
+for category, emb in embeddings.items():
+    centroids[category] = compute_centroids(emb, labels[category])
+
+
+faiss_indices = {}
+for category, centers in centroids.items():
+    faiss_indices[category] = create_faiss_index(centers.astype('float32'))
+
+
+query_embedding = np.random.rand(1, 128).astype('float32')
+nearest_category = find_nearest_category(query_embedding, faiss_indices)
+print("Nearest Category:", nearest_category)
+
+
