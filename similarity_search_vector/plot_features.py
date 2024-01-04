@@ -1,3 +1,5 @@
+#from: https://learn.deeplearning.ai/advanced-retrieval-for-ai/lesson/3/pitfalls-of-retrieval---when-simple-vector-search-fails
+
 import umap
 import numpy as np
 from tqdm import tqdm
@@ -20,4 +22,14 @@ plt.figure()
 plt.scatter(projected_dataset_embeddings[:, 0], projected_dataset_embeddings[:, 1], s=10)
 plt.gca().set_aspect('equal', 'datalim')
 plt.title('Projected Embeddings')
+plt.axis('off')
+
+# Plot the projected query and retrieved documents in the embedding space
+plt.figure()
+plt.scatter(projected_dataset_embeddings[:, 0], projected_dataset_embeddings[:, 1], s=10, color='gray')
+plt.scatter(projected_query_embedding[:, 0], projected_query_embedding[:, 1], s=150, marker='X', color='r')
+plt.scatter(projected_retrieved_embeddings[:, 0], projected_retrieved_embeddings[:, 1], s=100, facecolors='none', edgecolors='g')
+
+plt.gca().set_aspect('equal', 'datalim')
+plt.title(f'{query}')
 plt.axis('off')
