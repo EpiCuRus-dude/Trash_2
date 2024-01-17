@@ -1,0 +1,19 @@
+
+characters_to_search = ['{', '\r', '\\', ']', '\f']
+
+
+def contains_special_characters(string):
+    return any(char in string for char in characters_to_search)
+
+
+count = df['C'].apply(contains_special_characters).sum()
+
+df['contains_special'] = df['C'].apply(contains_special_characters)
+count_special = df['contains_special'].sum()
+
+
+df_clean = df[~df['contains_special']]
+
+
+count_after = len(df_clean)
+
