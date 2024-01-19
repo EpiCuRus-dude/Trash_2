@@ -1,12 +1,4 @@
-from sklearn.metrics import roc_curve, auc
-from sklearn.preprocessing import label_binarize
-import matplotlib.pyplot as plt
-from itertools import cycle
-
-
-true = ['cat', 'fish', 'dog', 'cat', 'cat', 'fish', 'dog']
-preds = ['fish', 'fish', 'fish', 'cat', 'dog', 'dog', 'dog']
-
+# Not usefule!
 
 probabilities = [
     [0.1, 0.6, 0.3],  # Probability for first sample
