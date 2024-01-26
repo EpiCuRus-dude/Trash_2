@@ -30,4 +30,14 @@ tarball_name = 'all_results.tar.gz'
 with tarfile.open(tarball_name, "w:gz") as tar:
     tar.add(all_results_dir, arcname=os.path.basename(all_results_dir))
 
-p
+
+
+
+zip_filename = 'all_results.zip'
+with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for root, dirs, files in os.walk(all_results_dir):
+        for file in files:
+            zipf.write(os.path.join(root, file), 
+                       os.path.relpath(os.path.join(root, file), 
+                                       os.path.join(all_results_dir, '..')))
+
