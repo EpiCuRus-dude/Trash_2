@@ -25,3 +25,9 @@ for item in os.listdir('.'):
                         shutil.copy2(src_file_path, dest_file_path)
 
 print("All files have been successfully copied.")
+
+tarball_name = 'all_results.tar.gz'
+with tarfile.open(tarball_name, "w:gz") as tar:
+    tar.add(all_results_dir, arcname=os.path.basename(all_results_dir))
+
+p
