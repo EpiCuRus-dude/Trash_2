@@ -1,15 +1,13 @@
 import numpy as np
 from scipy.stats import norm
 
-# Example data setup
-np.random.seed(42)
-M = 3  # Number of indices
-N = 10  # Number of candidates in each index
 
-# Generate random distances for each candidate in each index
+np.random.seed(42)
+M = 3  
+N = 10  
+
 distances_from_indices = {f'Index_{i+1}': np.random.rand(N) for i in range(M)}
 
-# Calculate mean and variance for each index
 means_vars = {index: (np.mean(distances), np.var(distances)) for index, distances in distances_from_indices.items()}
 
 priors = {candidate: 1/N for candidate in range(N)}
