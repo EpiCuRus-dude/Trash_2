@@ -8,7 +8,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 
 def preprocess_text(text):
-    # Normalize text
+    
     text = text.lower()
     
     
@@ -18,7 +18,10 @@ def preprocess_text(text):
     tokens = word_tokenize(text)
     
     
-    filtered_tokens = [word for word in tokens if word not in stopwords.words('english')]
+    extended_stopwords = set(stopwords.words('english')) | {"and", "or"}
+    
+    
+    filtered_tokens = [word for word in tokens if word not in extended_stopwords]
     
     return " ".join(filtered_tokens)
 
