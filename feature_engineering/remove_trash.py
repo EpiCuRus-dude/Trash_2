@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import nltk
 
-
+## Working fine but not great
 nltk.download('punkt')
 nltk.download('stopwords')
 
