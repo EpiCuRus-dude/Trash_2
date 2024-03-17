@@ -8,3 +8,4 @@ https://leetcode.com/problems/maximum-average-subarray-ii/description/?envType=s
 https://leetcode.com/problems/factor-combinations/?envType=study-plan-v2&envId=premium-algo-100
 https://leetcode.com/problems/find-root-of-n-ary-tree/description/?envType=study-plan-v2&envId=premium-algo-100
 https://leetcode.com/tag/design
+https://leetcode.com/problems/lru-cache/
