@@ -159,7 +159,7 @@ val_transforms = Compose(
 
 # +
 
-data_list_file_path = "/src/workspace/John/Muscle_Seg/Muscle_Seg/List/list.json"
+data_list_file_path = ...
 loaded_dic = load_pet(data_list_file_path)
 
 train_files = loaded_dic["Train_data_dicts"]
