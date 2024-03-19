@@ -9,4 +9,6 @@ l2_penalty = sum(torch.sum(param ** 2) for param in model.parameters() if param.
 
 # LLMs can easily get overfitted because of LoRA
 
-# None of Weight Decay or L1 L2 worked
+# L1 with small lambda worked
+# L2 with weight decsay didn't
+# Explicit L2 work
