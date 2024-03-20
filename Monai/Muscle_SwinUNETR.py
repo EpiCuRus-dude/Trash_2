@@ -1,7 +1,7 @@
 ### Adapted from here:
 https://github.com/Project-MONAI/tutorials/blob/main/3d_segmentation/swin_unetr_btcv_segmentation_3d.ipynb
 
-
+### MAKING THE LIST IS NECESSARY
 # +
 # # +
 import numpy as np
