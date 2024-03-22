@@ -42,5 +42,4 @@ def infer_mri_weighting_advanced(dicom_file_path):
 
     return 'Unknown - Requires Manual Review'
 
-dicom_file_path = 'path_to_your_dicom_file.dcm'
-print(infer_mri_weighting_advanced(dicom_file_path))
+
