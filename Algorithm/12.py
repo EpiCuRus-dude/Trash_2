@@ -17,3 +17,5 @@ https://leetcode.com/problems/design-in-memory-file-system/description/
 https://leetcode.com/problems/max-stack/editorial/
 https://leetcode.com/problems/design-hit-counter/editorial/
 
+https://leetcode.com/problems/range-sum-query-mutable/
+
