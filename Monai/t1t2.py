@@ -1,4 +1,5 @@
 import pydicom
+#### It is not accurate
 
 def infer_mri_weighting_advanced(dicom_file_path):
     dicom_data = pydicom.dcmread(dicom_file_path)
