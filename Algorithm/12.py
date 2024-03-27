@@ -19,3 +19,5 @@ https://leetcode.com/problems/design-hit-counter/editorial/
 
 https://leetcode.com/problems/range-sum-query-mutable/
 
+https://leetcode.com/problems/find-leaves-of-binary-tree/description/?envType=study-plan-v2&envId=premium-algo-100
+
