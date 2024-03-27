@@ -37,6 +37,9 @@ def find_dicom_series_and_convert(base_dir, nifti_base_dir):
         json.dump(mapping, json_file, indent=4)
 
 
+## Creates json files 
+
+
 base_dir = "dir1" 
 nifti_base_dir = "nifti_files" 
 find_dicom_series_and_convert(base_dir, nifti_base_dir)
