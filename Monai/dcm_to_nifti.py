@@ -1,7 +1,7 @@
 import os
 import subprocess
 import json
-###
+
 def convert_dicom_to_nifti(dicom_dir, nifti_output_dir):
    
     
