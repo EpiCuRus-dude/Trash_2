@@ -22,3 +22,15 @@ def get_dicom_tags_as_text(dicom_path):
     all_tags_text = ' | '.join(tag_text_list)
 
     return all_tags_text
+
+def pp(dicom_path, processor):
+   
+    dicom_file = pydicom.dcmread(dicom_path)
+    image_data = dicom_file.pixel_array
+    image = Image.fromarray(image_data).convert('RGB')
+    text_data = get_dicom_tags_as_text(dicom_path)
+
+    
+    
+
+    return inputs
