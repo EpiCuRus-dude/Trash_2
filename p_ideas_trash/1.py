@@ -10,14 +10,13 @@
         f"Given the detailed notes, {description1} and {description2}, from a specialist at another institute about our new animal, we need your creative input for its name. What would you suggest?",
         f"An animal has just been transferred to our institute with two identifying descriptions, {description1} and {description2}, from an external expert. We require your expertise to name it appropriately. What name comes to mind?"
  
-f"After observing the new specimen with characteristics {description1} and {description2}, a narrative is needed for our exhibit. Can you conjure a name that encapsulates its essence?",
-        f"Imagine a mythical creature with traits {description1} and {description2}. What legendary name would you bestow upon this enigmatic being in our storybook?",
-        f"An alien species resembling {description1} and {description2} has been discovered. As the lead scientist, what name would you propose for this extraterrestrial life form in our galactic catalog?",
-        f"In our enchanted forest, a creature with {description1} and {description2} has been spotted. What whimsical name suits this fairy-tale being in our mystical compendium?",
-        f"During a deep-sea expedition, we encountered a marine entity exhibiting {description1} and {description2}. What name would you give this oceanic marvel in our aquatic archives?",
-        f"In the realm of superheroes, a new character with powers {description1} and {description2} has emerged. What heroic name fits this new member of our superhero league?",
-        f"A discovery in the ancient ruins revealed a creature with features {description1} and {description2}. What name should we inscribe in our historical records to honor this ancient being?",
-        f"In a future dystopia, a synthetic organism with attributes {description1} and {description2} has been engineered. What name would you assign to this creation in our cybernetic database?",
-        f"Within a parallel universe, an entity possessing {description1} and {description2} has been encountered. What name would resonate across dimensions for this interdimensional traveler?",
-        f"In a children’s book about a magical zoo, an animal with the qualities {description1} and {description2} needs a name. What enchanting name would you give to this character in our narrative?"
- 
+"Given that the animal requires special care, as noted in the descriptions {description1} and {description2}, what should we name this delicate newcomer to our institute?"
+"An animal with specific care needs, described as {description1} and {description2}, has arrived at our facility. Can you suggest a name that reflects its unique requirements?"
+"We have a new animal that needs special attention, characterized by {description1} and {description2}. What name would be suitable for such a creature?"
+"Considering the special care needs outlined in {description1} and {description2}, what name do you recommend for this new and unique animal at our institute?"
+"With the arrival of an animal needing special care, and described as {description1} and {description2}, we are in search of a fitting name. What are your suggestions?"
+"A new resident at our institute, described as {description1} and {description2}, requires special care. We need a name that captures its essence. What would you suggest?"
+"In light of the special care requirements detailed in {description1} and {description2} for our new animal, could you help us decide on a suitable name?"
+"We've received an animal that needs particular attention, with characteristics {description1} and {description2}. What name would best suit this animal, considering its special needs?"
+"Given the special care profile of our new animal, described by {description1} and {description2}, what name would you propose to reflect its unique characteristics?"
+"Our institute has welcomed a new animal needing special care, as described in {description1} and {description2}. What name would you give this animal that aligns with its care requirements?" 
