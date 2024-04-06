@@ -11,15 +11,14 @@ def all_subsets(lst):
     
     return list(chain(*[combinations(lst, i) for i in range(1, len(lst) + 1)]))
 
-def combine_subsets(list_1, list_2):
-    subsets_list_1 = all_subsets(list_1)
-    subsets_list_2 = all_subsets(list_2)
+def combine_lists(list_1, list_2):
+    
+    combs_list_1 = all_combinations(list_1)
+    combs_list_2 = all_combinations(list_2)
 
-    combined_subsets = set()
+   
+    combined = [(comb1, comb2) for comb1, comb2 in product(combs_list_1, combs_list_2)]
 
-    for subset1 in subsets_list_1:
-        for subset2 in subsets_list_2:
-            combined_subsets.add((frozenset(subset1), frozenset(subset2)))
+    return combined
 
-    return [tuple(map(tuple, pair)) for pair in combined_subsets]
 
