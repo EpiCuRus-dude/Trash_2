@@ -10,6 +10,8 @@ https://leetcode.com/problems/find-root-of-n-ary-tree/description/?envType=study
 https://leetcode.com/tag/design
 https://leetcode.com/problems/lru-cache/
 
+# Minimize the objective function
+result = minimize(objective, initial_weights, method='SLSQP', bounds=bounds, constraints=constraints)
 
      
 https://leetcode.com/problems/lfu-cache/description/
