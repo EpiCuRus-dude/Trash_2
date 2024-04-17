@@ -7,3 +7,18 @@ result = minimize(objective, initial_weights, method='SLSQP', bounds=bounds, con
 
 
 ### differential one has been the best
+
+ weights = np.array(weights)
+  scores = np.array(scores)
+
+  weighted_scores = scores * weights
+  total_scores_per_candidate = np.sum(weighted_scores, axis=1)
+
+  mean_score = np.mean(total_scores_per_candidate)
+  variance = np.var(total_scores_per_candidate)
+
+
+  regularization_term = lambda_reg * np.sum(weights**2)
+
+
+  regularized_variance = variance + regularization_term
