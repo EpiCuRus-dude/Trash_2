@@ -19,10 +19,12 @@ import csv
 
 
 
-def save_to_csv(data_iter, filename):
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['label', 'text'])  # writing the headers
+def write_to_csv(data_iter, file_name):
+    with open(file_name, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+       
+        writer.writerow(['Label', 'Text'])
+      
         for label, text in data_iter:
             writer.writerow([label, text])
 
