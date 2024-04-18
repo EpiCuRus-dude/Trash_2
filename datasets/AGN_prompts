@@ -1,0 +1,10 @@
+"Classify this business news article: {}. Which category does it belong to: World, Sports, Business, or Technology?"
+"Given this sports news snippet: {}, determine its appropriate category. Is it World, Sports, Business, or Technology?"
+"Evaluate the following technology article: {}. Which category should this be classified under: World, Sports, Business, or Technology?"
+"Classify the following piece of world news: {}. Should it be categorized as World, Sports, Business, or Technology?"
+
+"In today’s fast-paced world, technology evolves daily. Consider the details in this article: {}. How would you classify it? Is it discussing global events, sports updates, business dynamics, or technological advancements?"
+
+"The world is a vast place with endless stories. Reflect on the global implications of the news described here: {}. Does it belong in the realm of World, Sports, Business, or Technology news?"
+"Financial markets are influenced by a variety of factors. Analyze the economic insights provided in this piece: {}. Which category fits best for this content—World, Sports, Business, or Technology?"
+"From local games to global tournaments, sports stories captivate many. Review the athletic highlights mentioned in this article: {}. Should this be categorized under World, Sports, Business, or Technology?"
