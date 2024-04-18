@@ -12,3 +12,6 @@ def yield_tokens(data_iter):
 vocab = build_vocab_from_iterator(yield_tokens(train_iter), specials=["<unk>"])
 vocab.set_default_index(vocab["<unk>"])
 
+text_pipeline = lambda x: [vocab[token] for token in tokenizer(x)]
+label_pipeline = lambda x: int(x)
+
