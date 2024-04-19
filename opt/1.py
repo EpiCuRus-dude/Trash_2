@@ -49,10 +49,10 @@ def borda_count(scores):
     borda_scores = [0] * num_candidates
     
  
-    for referee_scores in zip(*scores):  # This gives us each referee's scores as tuples
-        # Sort scores and get original indices (ranks)
+    for referee_scores in zip(*scores):  
+        
         sorted_indices = sorted(range(num_candidates), key=lambda x: referee_scores[x], reverse=True)
-        # Assign points based on rank
+       
         for rank, index in enumerate(sorted_indices):
             borda_scores[index] += num_candidates - 1 - rank
     
