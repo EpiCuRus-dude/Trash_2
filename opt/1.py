@@ -25,3 +25,8 @@ result = minimize(objective, initial_weights, method='SLSQP', bounds=bounds, con
   regularized_variance = variance + regularization_term
 
 cons = ({'type': 'eq', 'fun': lambda w: np.sum(w) - 1})
+def median_score(scores):
+    return [sorted(candidate)[len(candidate) // 2] for candidate in scores]
+
+
+median_scores = median_score(scores)
