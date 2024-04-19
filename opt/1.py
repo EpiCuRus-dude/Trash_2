@@ -30,3 +30,13 @@ def median_score(scores):
 
 
 median_scores = median_score(scores)
+
+
+####
+def borda_count(scores):
+    num_candidates = len(scores)
+    return [sum((num_candidates - rank) for rank in sorted(candidate)) for candidate in zip(*scores)]
+
+
+borda_scores = borda_count(scores)
+
