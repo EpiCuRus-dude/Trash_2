@@ -7,15 +7,22 @@ _, num_candidates, num_refs = Scores.shape
 
 std_devs = []
 
+std_devs = np.zeros(num_candidates)
+avg_scores = np.zeros(num_candidates)
+
+
 for candidate in range(num_candidates):
-    scores = Scores[0, candidate, :]  =
-    std_dev = np.std(scores)  
-    std_devs.append(std_dev)
+    scores = Scores[0, candidate, :]
+    std_devs[candidate] = np.std(scores)
+    avg_scores[candidate] = np.mean(scores)
 
-# Index of the candidate with the lowest standard deviation
 
-print("Standard Deviations for Each Candidate:", std_devs)
-print("Standard Deviation Analysis Winner (Index):", winner_index)
+std_devs_normalized = std_devs / np.max(std_devs)
+avg_scores_normalized = avg_scores / np.max(avg_scores)
+combined_scores = ... # whatever
+
+
+winner_index = np.argmax(combined_scores)
 
 
 candidate_names = [...]
