@@ -25,7 +25,7 @@ print("Overall Winner (Index):", final_winner)
 print("Final Candidate Ranking (Indices):", final_ranking)
 
 
-candidate_names = ["Alice", "Bob", "Charlie"]  # Adjust as needed
+
 
 final_ranking_named = [candidate_names[i] for i in final_ranking]
 
