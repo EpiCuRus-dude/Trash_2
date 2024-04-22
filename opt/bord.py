@@ -1,33 +1,25 @@
 import numpy as np
 
-Scores = np.random.randint(50, 100, size=(10, 3, 4))  # Random scores
+Scores = np.random.randint(50, 100, size=(10, 3, 4))
 
+num_tests, num_candidates, num_refs = Scores.shape
 
-
-borda_points = np.zeros(num_candidates)
+winners = []
 
 for test in range(num_tests):
+    borda_points = np.zeros(num_candidates)
     for ref in range(num_refs):
         scores = Scores[test, :, ref]
-        
-        
-        ranks = np.argsort(scores)[::-1]  # Descending order
-        
-
+        ranks = np.argsort(scores)[::-1]
         for i, candidate in enumerate(ranks):
-            borda_points[candidate] += (num_candidates - i)  # Points assignment
+            borda_points[candidate] += (num_candidates - i)
+    winner_index = np.argmax(borda_points)
+    winners.append(winner_index)
 
-final_winner = np.argmax(borda_points)  # Overall winner
-final_ranking = np.argsort(borda_points)[::-1]  # Final ranking
+print("Winners for Each Test (Indices):", winners)
 
-print("Borda Points for Each Candidate:", borda_points)
-print("Overall Winner (Index):", final_winner)
-print("Final Candidate Ranking (Indices):", final_ranking)
+candidate_names = [...]
 
+winners_named = [candidate_names[winner] for winner in winners]
 
-
-
-final_ranking_named = [candidate_names[i] for i in final_ranking]
-
-print("Final Candidate Ranking (Named):", final_ranking_named)
-print("Overall Winner (Named):", candidate_names[final_winner])
+print("Winners for Each Test (Named):", winners_named)
