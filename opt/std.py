@@ -25,6 +25,7 @@ combined_scores = ... # whatever
 winner_index = np.argmax(combined_scores)
 
 
+
 candidate_names = [...]
 
 print("Standard Deviation Analysis Winner (Named):", candidate_names[winner_index])
