@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-
+https://mmuratarat.github.io/2019-10-02/multi-class-classification
 
 criterion = nn.BCELoss()
 
