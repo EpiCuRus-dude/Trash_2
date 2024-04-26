@@ -17,17 +17,23 @@ labels = torch.tensor([
     [0, 1, 0],  
     [1, 0, 0],  
 ], dtype=torch.float)
+import torch
+import torch.nn as nn
 
+# Example data
+num_labels = 3
+num_samples = 10
+predictions = torch.rand(num_samples, num_labels)  # Example predictions
+labels = torch.randint(0, 2, (num_samples, num_labels)).float()  # Example ground truth labels
 
-#Case 1: Using nn.BCELoss() (outputs must have sigmoid applied)
-sigmoid_outputs = torch.sigmoid(outputs)  # Apply sigmoid manually
-criterion_bce = nn.BCELoss()
-loss_bce = criterion_bce(sigmoid_outputs, labels)  # Calculate loss with sigmoid applied
-print("BCELoss:", loss_bce.item())
+# Define the BCEWithLogitsLoss criterion
+criterion = nn.BCEWithLogitsLoss()
 
-# Case 2: Using nn.BCEWithLogitsLoss() (applies sigmoid internally)
-criterion_bce_logits = nn.BCEWithLogitsLoss()
-loss_bce_logits = criterion_bce_logits(outputs, labels)  # Compute loss without sigmoid applied
+# Calculate the loss
+loss = criterion(predictions, labels)
+
+print("BCEWithLogitsLoss:", loss.item())
+
 print("BCEWithLogitsLoss:", loss_bce_logits.item())
 
 
