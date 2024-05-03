@@ -77,3 +77,44 @@ weighted_scores = scores.dot(weights)
 print("Entropy-based Weights:", weights)
 print("Weighted Scores:", weighted_scores)
 
+
+
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from sklearn.utils import resample
+
+# Example data: scores from 3 recommenders for 5 candidates
+scores = np.array([
+    [0.9, 0.1, 0.2],
+    [0.5, 0.6, 0.7],
+    [0.3, 0.4, 0.5],
+    [0.8, 0.8, 0.1],
+    [0.2, 0.2, 0.9]
+])
+
+
+scaler = StandardScaler()
+scores_standardized = scaler.fit_transform(scores)
+
+
+pca = PCA()
+components = pca.fit_transform(scores_standardized.T)  
+
+
+explained_variance = pca.explained_variance_ratio_
+cumulative_variance = np.cumsum(explained_variance)
+n_components = np.where(cumulative_variance >= 0.8)[0][0] + 1 
+
+
+loadings = pca.components_[:n_components, :]
+weights = np.sum(loadings, axis=0)
+weights /= np.sum(weights) 
+
+
+weighted_scores = np.dot(scores, weights)
+
+print("PCA-derived Weights:", weights)
+print("Weighted Scores:", weighted_scores)
+
+
