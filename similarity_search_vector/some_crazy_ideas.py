@@ -120,3 +120,21 @@ print("PCA-derived Weights:", weights)
 print("Weighted Scores:", weighted_scores)
 
 
+
+###
+
+variances = np.var(normalized_scores, axis=0)
+skewness = np.array([np.mean((x - np.mean(x))**3) for x in normalized_scores.T]) / np.std(normalized_scores, axis=0)**3
+kurtosis = np.array([np.mean((x - np.mean(x))**4) for x in normalized_scores.T]) / np.std(normalized_scores, axis=0)**4 - 3
+
+composite_scores = variances + abs(skewness) + (1 / (1 + abs(kurtosis)))
+
+
+inverse_composite_scores = 1 / composite_scores
+
+
+weights = inverse_composite_scores / np.sum(inverse_composite_scores)
+
+
+
+
