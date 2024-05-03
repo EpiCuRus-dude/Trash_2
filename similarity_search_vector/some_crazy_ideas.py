@@ -47,3 +47,33 @@ weighted_scores = np.dot(scores, weights)
 
 print("Weights:", weights)
 print("Weighted Scores:", weighted_scores)
+
+
+import numpy as np
+
+# Scores from 3 recommenders for 5 candidates
+scores = np.array([
+    [0.9, 0.1, 0.2],
+    [0.5, 0.6, 0.7],
+    [0.3, 0.4, 0.5],
+    [0.8, 0.8, 0.1],
+    [0.2, 0.2, 0.9]
+])
+
+
+def entropy(scores):
+    p = scores / np.sum(scores)
+    return -np.sum(p * np.log(p + 1e-9))  # Adding a small number to prevent log(0)
+
+
+entropies = np.array([entropy(scores[:, i]) for i in range(scores.shape[1])])
+
+
+weights = entropies / np.sum(entropies)
+
+
+weighted_scores = scores.dot(weights)
+
+print("Entropy-based Weights:", weights)
+print("Weighted Scores:", weighted_scores)
+
