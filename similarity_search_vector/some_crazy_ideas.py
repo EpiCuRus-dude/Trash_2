@@ -23,3 +23,27 @@ weighted_scores = scores.dot(weights)
 
 print("Weights based on PCA:", weights)
 print("Weighted Scores:", weighted_scores)
+
+import numpy as np
+
+
+scores = np.array([
+    [0.9, 0.1, 0.2],
+    [0.5, 0.6, 0.7],
+    [0.3, 0.4, 0.5],
+    [0.8, 0.8, 0.1],
+    [0.2, 0.2, 0.9]
+])
+
+
+variances = np.var(scores, axis=0)
+
+
+weights = 1 / variances
+weights /= np.sum(weights)  # Normalize weights to sum to 1
+
+
+weighted_scores = np.dot(scores, weights)
+
+print("Weights:", weights)
+print("Weighted Scores:", weighted_scores)
