@@ -85,6 +85,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.utils import resample
 
 # Example data: scores from 3 recommenders for 5 candidates
+from sklearn.preprocessing import StandardScaler
+from sklearn.utils import resample
 scores = np.array([
     [0.9, 0.1, 0.2],
     [0.5, 0.6, 0.7],
