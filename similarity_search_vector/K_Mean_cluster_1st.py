@@ -27,4 +27,23 @@ for idx in indices[0][:n_search_clusters]:
 
 results.sort(key=lambda x: x[2])
 
+##########
+from sklearn.cluster import KMeans
+import numpy as np
+
+def select_top_candidates_clustering(scores, num_clusters=3):
+    scores = np.array(scores).reshape(-1, 1)
+    kmeans = KMeans(n_clusters=num_clusters)
+    kmeans.fit(scores)
+    cluster_centers = kmeans.cluster_centers_
+    top_cluster = np.argmax(cluster_centers)
+    top_candidates_indices = np.where(kmeans.labels_ == top_cluster)[0]
+    return top_candidates_indices
+
+
+scores = np.random.randint(0, 101, 100)
+top_candidates_indices = select_top_candidates_clustering(scores, num_clusters=3)
+
+
+
 
