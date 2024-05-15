@@ -143,7 +143,8 @@ second_derivative = np.diff(np.diff(sse))
 elbow_point = np.argmin(second_derivative) + 2  # Adding 2 to adjust for the double diff
 
 print(f"The optimal number of top candidates (k) using the elbow method is: {elbow_point}")
-
+##############
+from kneed import KneeLocator
 
 import numpy as np
 import matplotlib.pyplot as plt
