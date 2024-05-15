@@ -145,5 +145,47 @@ elbow_point = np.argmin(second_derivative) + 2  # Adding 2 to adjust for the dou
 print(f"The optimal number of top candidates (k) using the elbow method is: {elbow_point}")
 
 
+import numpy as np
+import matplotlib.pyplot as plt
+from kneed import KneeLocator
+
+# Sample data: replace with your actual scores
+np.random.seed(42)
+N = 100
+scores = np.random.uniform(0, 100, N)
+
+# Rank candidates by scores
+ranked_indices = np.argsort(scores)[::-1]  # Indices of scores in descending order
+sorted_scores = scores[ranked_indices]
+
+# Compute cumulative sums
+cumsum_scores = np.cumsum(sorted_scores)
+cumsum_scores_squared = np.cumsum(sorted_scores ** 2)
+
+# Initialize SSE array
+sse = np.zeros(N)
+
+# Compute SSE using cumulative sums
+for k in range(1, N + 1):
+    mean_top_k = cumsum_scores[k-1] / k
+    sse[k-1] = cumsum_scores_squared[k-1] - 2 * mean_top_k * cumsum_scores[k-1] + k * mean_top_k ** 2
+
+# Use Kneedle algorithm to find the elbow point
+kneedle = KneeLocator(range(1, N + 1), sse, curve='convex', direction='decreasing')
+optimal_k = kneedle.elbow
+
+print(f"The optimal number of top candidates (k) using the Kneedle algorithm is: {optimal_k}")
+
+# Plot the elbow graph for visualization
+plt.plot(range(1, N + 1), sse, marker='o')
+plt.axvline(x=optimal_k, color='r', linestyle='--')
+plt.xlabel('Number of Top Candidates (k)')
+plt.ylabel('Sum of Squared Differences')
+plt.title('Elbow Method for Optimal k using Kneedle Algorithm')
+plt.show()
+
+
+
+
 
 
