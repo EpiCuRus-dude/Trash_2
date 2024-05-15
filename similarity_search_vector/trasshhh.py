@@ -163,6 +163,15 @@ sorted_scores = scores[ranked_indices]
 cumsum_scores = np.cumsum(sorted_scores)
 cumsum_scores_squared = np.cumsum(sorted_scores ** 2)
 
+
+
+# Normalize SSE
+sse = (sse - np.min(sse)) / (np.max(sse) - np.min(sse))
+
+# Apply Gaussian smoothing to the SSE values
+sse_smooth = gaussian_filter1d(sse, sigma=2)
+
+
 # Initialize SSE array
 sse = np.zeros(N)
 
