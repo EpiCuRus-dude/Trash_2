@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def find_elbow_point(scores):
-    # Step 1: Sort the scores in descending order
-    sorted_scores = sorted(scores, reverse=True)
+    # Step 1: Sort the scores in descending order along with their original indices
+    sorted_indices_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
+    sorted_indices, sorted_scores = zip(*sorted_indices_scores)
     
     # Step 2: Compute the cumulative sum
     cumulative_sum = np.cumsum(sorted_scores)
@@ -27,11 +28,15 @@ def find_elbow_point(scores):
     
     # Use the "elbow" point heuristic
     elbow_point = np.argmax(np.diff(y, 2)) + 1
-    return elbow_point, sorted_scores[:elbow_point]
+    
+    # Get the indices of the top candidates
+    top_candidate_indices = sorted_indices[:elbow_point]
+    
+    return elbow_point, top_candidate_indices
 
 # Example usage
 scores = [10, 50, 20, 30, 40, 60, 70, 80, 90, 100]
-elbow_point, top_candidates = find_elbow_point(scores)
+elbow_point, top_candidate_indices = find_elbow_point(scores)
 
 print(f"The number of top candidates to choose: {elbow_point}")
-print(f"Indices of the top candidates: {top_candidates}")
+print(f"Indices of the top candidates: {top_candidate_indices}")
