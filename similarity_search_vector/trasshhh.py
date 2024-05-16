@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
+def find_pareto_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
     # Step 1: Sort the scores in descending order along with their original indices
     sorted_indices_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
     sorted_indices, sorted_scores = zip(*sorted_indices_scores)
@@ -13,11 +13,12 @@ def find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
     total_score = cumulative_sum[-1]
     cumulative_percentage = cumulative_sum / total_score * 100
     
-    # Step 4: Calculate the second derivative (rate of change of the rate of change)
-    second_derivative = np.diff(cumulative_percentage, 2)
-    
-    # Find the point where the second derivative is maximized
-    elbow_point = np.argmax(second_derivative) + 2  # +2 to account for the second derivative shift
+    # Apply the Pareto principle
+    elbow_point = len(scores)  # Start with the assumption that all candidates are selected
+    for i in range(len(scores)):
+        if cumulative_percentage[i] >= score_coverage * 100:
+            elbow_point = i + 1
+            break
     
     # Apply the percentage cap
     max_candidates = int(len(scores) * percentage_cap)
@@ -27,12 +28,6 @@ def find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
     if elbow_point == 0:
         elbow_point = 1
     
-    # Ensure the selected candidates cover the score coverage percentage
-    for i in range(elbow_point, len(cumulative_percentage)):
-        if cumulative_percentage[i] >= score_coverage * 100:
-            elbow_point = i + 1
-            break
-    
     # Plot the cumulative percentage with the elbow point
     x = np.arange(1, len(scores) + 1)
     plt.figure(figsize=(10, 6))
@@ -40,7 +35,7 @@ def find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
     plt.axvline(x=elbow_point, color='r', linestyle='--', label='Elbow Point')
     plt.xlabel('Number of Candidates')
     plt.ylabel('Cumulative Percentage of Total Score')
-    plt.title('Strict Elbow Method to Determine Top Candidates')
+    plt.title('Pareto Principle to Determine Top Candidates')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -52,7 +47,7 @@ def find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8):
 
 # Example usage
 scores = [10, 50, 20, 30, 40, 60, 70, 80, 90, 100]
-elbow_point, top_candidate_indices = find_strict_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8)
+elbow_point, top_candidate_indices = find_pareto_elbow_point(scores, percentage_cap=0.2, score_coverage=0.8)
 
 print(f"The number of top candidates to choose: {elbow_point}")
 print(f"Indices of the top candidates: {top_candidate_indices}")
