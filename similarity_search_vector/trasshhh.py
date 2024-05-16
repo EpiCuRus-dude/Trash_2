@@ -5,7 +5,7 @@ def find_sugs_elbow_point(scores, alpha=0.05):
     # Step 1: Sort the scores in descending order along with their original indices
     sorted_indices_scores = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
     sorted_indices, sorted_scores = zip(*sorted_indices_scores)
-    
+
     # Step 2: Compute the cumulative sum
     cumulative_sum = np.cumsum(sorted_scores)
     
@@ -13,11 +13,33 @@ def find_sugs_elbow_point(scores, alpha=0.05):
     total_score = cumulative_sum[-1]
     cumulative_percentage = cumulative_sum / total_score * 100
     
-    # Step 4: Detect change points using SUGS
-    change_points = []
-    for i in range(1, len(cumulative_percentage)):
-        if cumulative_percentage[i] - cumulative_percentage[i-1] < alpha * cumulative_percentage[i-1]:
-            change_points.append(i)
+    # Step 4: Implement SUGS method for change point detection
+    def sugs_search(scores, alpha):
+        n = len(scores)
+        change_points = []
+        current_point = 0
+
+        while current_point < n - 1:
+            max_gain = 0
+            best_point = current_point
+            
+            for i in range(current_point + 1, n):
+                gain = (cumulative_percentage[i] - cumulative_percentage[current_point]) / (i - current_point)
+                
+                if gain > max_gain:
+                    max_gain = gain
+                    best_point = i
+            
+            # Uncertainty assessment: Decide if the point should be added based on alpha
+            if max_gain > alpha:
+                change_points.append(best_point)
+                current_point = best_point
+            else:
+                break
+        
+        return change_points
+    
+    change_points = sugs_search(sorted_scores, alpha)
     
     # Select the first significant change point as the elbow point
     elbow_point = change_points[0] if change_points else len(scores)
