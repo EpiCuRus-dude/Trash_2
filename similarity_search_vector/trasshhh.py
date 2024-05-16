@@ -1,34 +1,37 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import silhouette_score
-from sklearn.preprocessing import StandardScaler
 
-def silhouette_method(scores):
-    sorted_indices = np.argsort(scores)[::-1]
-    sorted_scores = scores[sorted_indices]
-    silhouette_scores = []
+def find_elbow_point(scores):
+    # Step 1: Sort the scores in descending order
+    sorted_scores = sorted(scores, reverse=True)
     
-    for i in range(2, len(scores)):
-        labels = np.zeros(len(scores))
-        labels[:i] = 1
-        silhouette_avg = silhouette_score(scores.reshape(-1, 1), labels)
-        silhouette_scores.append(silhouette_avg)
+    # Step 2: Compute the cumulative sum
+    cumulative_sum = np.cumsum(sorted_scores)
     
-    optimal_candidates = np.argmax(silhouette_scores) + 2
-    top_indices = sorted_indices[:optimal_candidates]
+    # Step 3: Normalize by the total score
+    total_score = cumulative_sum[-1]
+    cumulative_percentage = cumulative_sum / total_score * 100
     
-    return optimal_candidates, top_indices, silhouette_scores
+    # Step 4: Find the elbow point
+    x = np.arange(1, len(scores) + 1)
+    y = cumulative_percentage
+    
+    # Plot the cumulative percentage
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, y, marker='o')
+    plt.xlabel('Number of Candidates')
+    plt.ylabel('Cumulative Percentage of Total Score')
+    plt.title('Elbow Method to Determine Top Candidates')
+    plt.grid(True)
+    plt.show()
+    
+    # Use the "elbow" point heuristic
+    elbow_point = np.argmax(np.diff(y, 2)) + 1
+    return elbow_point, sorted_scores[:elbow_point]
 
-scores = np.array([85, 92, 88, 96, 80, 78, 84, 93, 91, 87])
-optimal_candidates, top_indices, silhouette_scores = silhouette_method(scores)
+# Example usage
+scores = [10, 50, 20, 30, 40, 60, 70, 80, 90, 100]
+elbow_point, top_candidates = find_elbow_point(scores)
 
-print(f"Optimal number of top candidates to choose: {optimal_candidates}")
-print(f"Indices of top candidates: {top_indices}")
-print(f"Top candidates' scores: {scores[top_indices]}")
-
-plt.plot(range(2, len(scores)), silhouette_scores, marker='o')
-plt.axvline(x=optimal_candidates, color='r', linestyle='--')
-plt.xlabel('Number of Top Candidates')
-plt.ylabel('Silhouette Score')
-plt.title('Silhouette Method for Optimal Number of Top Candidates')
-plt.show()
+print(f"The number of top candidates to choose: {elbow_point}")
+print(f"Indices of the top candidates: {top_candidates}")
