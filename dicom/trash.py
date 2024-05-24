@@ -1,7 +1,9 @@
 def load_dicom_image(file_path):
     dicom = pydicom.dcmread(file_path)
     image = dicom.pixel_array
-\
+    image = image - np.min(image)  # Normalize to 0-1
+    image = (image / np.max(image) * 255).astype(np.uint8)  # Normalize to 0-255 and convert to uint8
+        
     if len(image.shape) == 2:
         image = np.stack((image,) * 3, axis=-1)
     return Image.fromarray(image)
