@@ -8,6 +8,11 @@ def load_dicom_image(file_path):
         image = np.stack((image,) * 3, axis=-1)
     return Image.fromarray(image)
 
+def plot_image(image, title="Image"):
+    plt.imshow(image)
+    plt.title(title)
+    plt.axis("off")
+    plt.show()
 
 dicom_files = ...
 
