@@ -17,6 +17,7 @@ def plot_image(image, title="Image"):
 dicom_files = ...
 
 images = [load_dicom_image(file) for file in dicom_files]
+
 def process_images(images):
     embeddings = []
     for image in images:
@@ -27,3 +28,4 @@ def process_images(images):
     return np.vstack(embeddings).astype(np.float32)
 
 image_embeddings = process_images(images)
+
