@@ -43,3 +43,12 @@ plt.xlabel('Frequency')
 plt.ylabel('Keywords')
 plt.title('Keyword Frequencies')
 plt.show()
+
+all_pi_numbers = [float(num) for sublist in df['pi_numbers'] for num in sublist]
+
+plt.figure(figsize=(10, 6))
+plt.hist(all_pi_numbers, bins=10, color='skyblue', edgecolor='black')
+plt.xlabel('Pi Numbers')
+plt.ylabel('Frequency')
+plt.title('Distribution of Pi Numbers')
+plt.show()
