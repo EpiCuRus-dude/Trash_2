@@ -52,3 +52,21 @@ plt.xlabel('Pi Numbers')
 plt.ylabel('Frequency')
 plt.title('Distribution of Pi Numbers')
 plt.show()
+
+
+def extract_pirads_context(description):
+    context_list = []
+    
+    sentences = re.split(r'[.!?]', description)
+    
+    for sentence in sentences:
+        # Use regex to match variations like "PI-RAD v1", "PI-RAD 1", "PI-RADS v2", etc.
+        matches = re.finditer(r'(\b\w+\b\s+)?(\bPI-RADS?\s*v?\d*\s*\d*\b)(\s+\b\w+\b)?', sentence, re.IGNORECASE)
+        for match in matches:
+            context = match.groups()
+            context_list.append(context)
+
+    if not context_list:
+        return None
+    
+    return context_list
