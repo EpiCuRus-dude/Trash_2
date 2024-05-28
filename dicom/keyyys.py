@@ -24,3 +24,22 @@ combinations = generate_combinations(keys, numbers)
 # Print the combinations
 for combo in combinations:
     print(combo)
+
+
+keyword_counts = Counter(all_keywords)
+
+
+labels, values = zip(*keyword_counts.items())
+
+
+sorted_indices = np.argsort(values)
+labels = np.array(labels)[sorted_indices]
+values = np.array(values)[sorted_indices]
+
+
+plt.figure(figsize=(10, 8))
+plt.barh(labels, values, color='skyblue')
+plt.xlabel('Frequency')
+plt.ylabel('Keywords')
+plt.title('Keyword Frequencies')
+plt.show()
