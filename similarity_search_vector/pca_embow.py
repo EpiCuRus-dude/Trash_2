@@ -21,6 +21,11 @@ def plot_cumulative_explained_variance(explained_variance, title):
     plt.show()
 
 
+def compute_reconstruction_error(embeddings, pca):
+    reconstructed = pca.inverse_transform(pca.transform(embeddings))
+    reconstruction_error = np.mean((embeddings - reconstructed) ** 2)
+    return reconstruction_error
+
 
 
 
