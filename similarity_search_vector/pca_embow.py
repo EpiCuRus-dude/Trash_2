@@ -21,8 +21,7 @@ def plot_cumulative_explained_variance(explained_variance, title):
     plt.show()
 
 
-embeddings_llm1 = np.random.rand(100, 768)  # Replace with your embeddings
-embeddings_llm2 = np.random.rand(100, 768)  # Replace with your embeddings
+
 
 
 pca_explained_variance_llm1 = calculate_pca_explained_variance(embeddings_llm1, n_components=10)
