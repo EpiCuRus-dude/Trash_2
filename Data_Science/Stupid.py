@@ -9,3 +9,11 @@ def extract_and_concat(filename):
 
         return ''.join(letters + numbers)
     return None
+
+plt.figure(figsize=(10, 6))
+plt.bar(df_sorted['FileName'], df_sorted['Value'], color='blue')
+plt.xlabel('File Name')
+plt.ylabel('Value')
+plt.title('Bar Plot of Values Sorted Low to High')
+plt.xticks(rotation=90)  # Set rotation to 90 degrees for vertical labels
+plt.show()
