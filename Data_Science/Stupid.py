@@ -19,8 +19,12 @@ plt.xticks(rotation=90)  # Set rotation to 90 degrees for vertical labels
 plt.show()
 
 
+# Generate a color map
+colors = plt.cm.viridis(np.linspace(0, 1, len(df_sorted)))
+
+# Plotting
 plt.figure(figsize=(15, 8))  # Increase figure size for better visibility
-plt.bar(df_sorted['FileName'], df_sorted['Value'], color='blue', width=0.4)  # Adjust bar width
+bars = plt.bar(df_sorted['FileName'], df_sorted['Value'], color=colors, width=0.4)  # Apply color map to bars
 plt.xlabel('File Name')
 plt.ylabel('Value')
 plt.title('Bar Plot of Values Sorted Low to High')
@@ -29,5 +33,3 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)  # Add a grid for better readabili
 plt.ylim(0, 50)  # Specify the range for the y-axis
 plt.tight_layout()  # Adjust layout to fit everything nicely
 plt.show()
-
-
