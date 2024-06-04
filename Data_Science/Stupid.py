@@ -33,3 +33,26 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)  # Add a grid for better readabili
 plt.ylim(0, 50)  # Specify the range for the y-axis
 plt.tight_layout()  # Adjust layout to fit everything nicely
 plt.show()
+
+
+
+import xgboost as xgb
+import numpy as np
+
+
+models = []
+for _ in range(100):  # Number of stochastic models
+    model = xgb.XGBClassifier(subsample=0.8, colsample_bytree=0.8)
+    model.fit(X_train, y_train)
+    models.append(model)
+
+
+def aggregate_predictions(models, X):
+    all_preds = np.array([model.predict_proba(X) for model in models])
+    mean_preds = np.mean(all_preds, axis=0)
+    std_preds = np.std(all_preds, axis=0)
+    return mean_preds, std_preds
+
+mean_preds, std_preds = aggregate_predictions(models, X_test)
+
+
