@@ -1,20 +1,31 @@
 
-def compare_dicom_files(file1_path, file2_path):
+def load_dicom_series(dicom_folder):
+    images = []
+    for filename in sorted(os.listdir(dicom_folder)):
+        if filename.endswith(".dcm"):
+            filepath = os.path.join(dicom_folder, filename)
+            dicom_image = pydicom.dcmread(filepath)
+            image_data = dicom_image.pixel_array
+            if image_data.ndim == 2:  # Ensure the image is grayscale
+                image_data = np.stack((image_data,) * 3, axis=-1)  # Convert to RGB
+            images.append(Image.fromarray(image_data))
+    return images
 
-    dicom1 = pydicom.dcmread(file1_path)
-    dicom2 = pydicom.dcmread(file2_path)
+def create_montage(images, rows, cols):
+    assert len(images) <= rows * cols, "More images than montage slots available"
+    width, height = images[0].size
+    montage_width = cols * width
+    montage_height = rows * height
+    montage = Image.new('RGB', (montage_width, montage_height))
+    for idx, image in enumerate(images):
+        x = (idx % cols) * width
+        y = (idx // cols) * height
+        montage.paste(image, (x, y))
+    return montage
 
+def encode_image(image, preprocess, model):
+    image_tensor = preprocess(image).unsqueeze(0).to(device)
+    with torch.no_grad():
+        features = model.encode_image(image_tensor)
+    return features
 
-    dicom1_dict = {tag: dicom1[tag].value for tag in dicom1.dir()}
-    dicom2_dict = {tag: dicom2[tag].value for tag in dicom2.dir()}
-
-
-    differences = []
-
-    all_keys = set(dicom1_dict.keys()).union(dicom2_dict.keys())
-
-    for key in all_keys:
-        value1 = dicom1_dict.get(key, None)
-        value2 = dicom2_dict.get(key, None)
-        if value1 != value2:
-            differences.append((key, value1, value2))
