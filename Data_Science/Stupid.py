@@ -7,6 +7,8 @@ def load_dicom_series(dicom_folder):
             dicom_image = pydicom.dcmread(filepath)
             image_data = dicom_image.pixel_array
             if image_data.ndim == 2:  # Ensure the image is grayscale
+                
+                image_data = (np.clip(image_data, 0, np.max(image_data)) / np.max(image_data) * 255).astype(np.uint8)
                 image_data = np.stack((image_data,) * 3, axis=-1)  # Convert to RGB
             images.append(Image.fromarray(image_data))
     return images
