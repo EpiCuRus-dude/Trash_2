@@ -1,11 +1,17 @@
-text = "This is the initial part of the text. Impression: Here is the part of the text that you want to extract, which continues until the end."
+def extract_between_keywords(text, keywords):
+    
+    keywords = [re.escape(keyword) for keyword in keywords]
 
 
-match = re.search(r'impression[:\s]*(.*)', text, re.IGNORECASE)
+    results = {}
 
+  
+    for i in range(len(keywords) - 1):
+        pattern = f"{keywords[i]}(.*?){keywords[i + 1]}"
+        match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+        if match:
 
-if match:
-    extracted_text = match.group(1)
-    print("Extracted Text:", extracted_text)
-else:
-    print("No 'impression' found in the text.")
+            key = f"{keywords[i]}_to_{keywords[i + 1]}"
+            results[key] = match.group(1).strip()
+
+    return results
