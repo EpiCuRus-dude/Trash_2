@@ -25,8 +25,11 @@ def create_montage(images, rows, cols):
         montage.paste(image, (x, y))
     return montage
 
-def encode_image(image, preprocess, model):
-    image_tensor = preprocess(image).unsqueeze(0).to(device)
+
+def encode_image(image, processor, model):
+    inputs = processor(images=image, return_tensors="pt")
+    outputs = model(**inputs)
+    return outputs.image_embeds
     with torch.no_grad():
         features = model.encode_image(image_tensor)
     return features
