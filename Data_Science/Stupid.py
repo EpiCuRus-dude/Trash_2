@@ -25,7 +25,8 @@ def extract_and_sort_segments(text, keywords):
 
 
 def extract_and_order_segments(text, keywords):
-    keywords_regex = r'\b(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')\b'
+
+    keywords_regex = r'(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')(?!\w)'
     matches = list(re.finditer(keywords_regex, text))
     segment_dict = {}
     used_segments = set()
