@@ -20,7 +20,4 @@ def extract_and_sort_segments(text, keywords):
     sorted_segment_dict = {k: segment_dict[k] for k in sorted(segment_dict)}
     return sorted_segment_dict
 
-text = "Here is keyword1 and some text, then keyword2, more text, keyword3, even more text, then keyword1."
-keywords = ["keyword1", "keyword2", "keyword3"]
 
-ex
