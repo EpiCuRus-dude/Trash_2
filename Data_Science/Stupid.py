@@ -21,3 +21,16 @@ def extract_and_sort_segments(text, keywords):
     return sorted_segment_dict
 
 
+
+def extract_and_order_segments(text, keywords):
+    keywords_regex = r'\b(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')\b'
+    matches = list(re.finditer(keywords_regex, text))
+    segment_dict = {}
+    for i in range(len(matches) - 1):
+        start_keyword = matches[i].group(0)
+        end_keyword = matches[i + 1].group(0)
+        segment_key = f"{start_keyword}_{end_keyword}"
+        potential_segment = text[matches[i].end():matches[i + 1].start()].strip()
+        if not re.search(keywords_regex, potential_segment):
+            segment_dict[segment_key] = potential_segment
+    return segment_dict
