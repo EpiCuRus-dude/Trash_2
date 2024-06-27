@@ -1,20 +1,26 @@
-
-import re
-
-def extract_segments(text, keywords):
+def extract_and_sort_segments(text, keywords):
     keywords = sorted(keywords, key=len, reverse=True)
     keywords_regex = r'\b(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')\b'
     
     matches = list(re.finditer(keywords_regex, text))
     
-    segments = set()
+    segment_dict = {}
     for i in range(len(matches) - 1):
         start = matches[i]
         end = matches[i + 1]
+        
+        segment_key = f"{start.group(0)}_{end.group(0)}"
         potential_segment = text[start.end():end.start()].strip()
         
         if not re.search(keywords_regex, potential_segment):
-            segments.add(potential_segment)
+            if segment_key not in segment_dict:
+                segment_dict[segment_key] = potential_segment
 
-    return list(segments)
 
+    sorted_segment_dict = {k: segment_dict[k] for k in sorted(segment_dict)}
+    return sorted_segment_dict
+
+text = "Here is keyword1 and some text, then keyword2, more text, keyword3, even more text, then keyword1."
+keywords = ["keyword1", "keyword2", "keyword3"]
+
+ex
