@@ -72,4 +72,20 @@ def extract_and_order_segments(text, keywords):
     return segment_dict
 
 
+"""
+positive_sim = torch.sum(anchors * positives, dim=1) / self.temperature
+
+       
+negative_sim = torch.matmul(anchors, negatives.transpose(1, 2)) / self.temperature
+
+max_val = torch.max(positive_sim, torch.max(negative_sim, dim=1)[0])
+exp_pos = torch.exp(positive_sim - max_val)
+exp_neg = torch.sum(torch.exp(negative_sim - max_val.unsqueeze(1)), dim=1)
+
+
+nce_loss = -torch.log(exp_pos / (exp_pos + exp_neg))
+return nce_loss.mean()
+"""
+
+
 
