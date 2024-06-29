@@ -1,77 +1,43 @@
-def extract_and_sort_segments(text, keywords):
-    keywords = sorted(keywords, key=len, reverse=True)
-    keywords_regex = r'\b(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')\b'
-    
-    matches = list(re.finditer(keywords_regex, text))
-    
-    segment_dict = {}
-    for i in range(len(matches) - 1):
-        start = matches[i]
-        end = matches[i + 1]
-        
-        segment_key = f"{start.group(0)}_{end.group(0)}"
-        potential_segment = text[start.end():end.start()].strip()
-        
-        if not re.search(keywords_regex, potential_segment):
-            if segment_key not in segment_dict:
-                segment_dict[segment_key] = potential_segment
+from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
+from nltk.tokenize import sent_tokenize
 
 
-    sorted_segment_dict = {k: segment_dict[k] for k in sorted(segment_dict)}
-    return sorted_segment_dict
+texts = [
+    "A sunset over the ocean with a clear sky and calm waves. The ocean was calm under the sunset.",
+    "Palm trees on a tropical beach with white sand and blue water. The beach was serene with beautiful palms.",
+    "Mountain landscape with snow peaks and a clear blue sky. The peaks were covered in snow.",
+    "A city skyline at night with illuminated buildings under a starry sky. The buildings shone brightly at night."
+]
 
 
+vectorizer = TfidfVectorizer(stop_words='english')
 
 
-
-def extract_and_order_segments(text, keywords):
-
-    keywords_regex = r'(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')(?!\w)'
-    matches = list(re.finditer(keywords_regex, text))
-    segment_dict = {}
-    used_segments = set()
-    for i in range(len(matches) - 1):
-        start = matches[i]
-        end = matches[i + 1]
-        potential_segment = text[start.end():end.start()].strip()
-        if not re.search(keywords_regex, potential_segment):
-            segment_key = f"{start.group(0)}_{end.group(0)}"
-            if potential_segment not in used_segments:
-                segment_dict[segment_key] = potential_segment
-                used_segments.add(potential_segment)
-    return segment_dict
+tfidf_matrix = vectorizer.fit_transform(texts)
 
 
+feature_names = vectorizer.get_feature_names_out()
 
 
-def extract_and_order_segments(text, keywords):
-    keywords_regex = r'(' + '|'.join(re.escape(keyword) for keyword in keywords) + r')(?!\w)'
-    matches = list(re.finditer(keywords_regex, text))
-    segment_dict = {}
-    used_segments = set()
-    for i in range(len(matches) - 1):
-        start = matches[i]
-        end = matches[i + 1]
-        potential_segment = text[start.end():end.start()].strip()
-        if not re.search(keywords_regex, potential_segment):
-            segment_key = f"{start.group(0)}_{end.group(0)}"
-            if potential_segment not in used_segments:
-                segment_dict[segment_key] = potential_segment
-                used_segments.add(potential_segment)
-    
-    
-    if matches:
-        last_match = matches[-1]
-        last_segment = text[last_match.end():].strip()
-        if not re.search(keywords_regex, last_segment):
-            last_key = f"{last_match.group(0)}_end"
-            if last_segment not in used_segments:
-                segment_dict[last_key] = last_segment
-                used_segments.add(last_segment)
-                
-    return segment_dict
+top_n = 3
+sorted_indices = np.argsort(tfidf_matrix.toarray(), axis=1)[:, -top_n:]
+top_keywords = [[feature_names[idx] for idx in row_indices] for row_indices in sorted_indices]
 
 
+keyword_sentences = []
+for text, keywords in zip(texts, top_keywords):
+    sentences = sent_tokenize(text)
+    sentences_with_keywords = {keyword: [] for keyword in keywords}
+    for sentence in sentences:
+        for keyword in keywords:
+            if keyword in sentence.lower():  # Check if keyword is in the sentence
+                sentences_with_keywords[keyword].append(sentence)
+    keyword_sentences.append(sentences_with_keywords)
 
 
-
+for i, keyword_sentence in enumerate(keyword_sentences):
+    print(f"Text {i+1} Keyword Sentences:")
+    for keyword, sentences in keyword_sentence.items():
+        print(f"{keyword}: {sentences}")
+    print("\n")
