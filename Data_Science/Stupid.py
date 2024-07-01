@@ -24,3 +24,10 @@ def extract_sentences_with_words(text, word1, word2):
     filtered_sentences = [sentence for sentence in sentences if re.search(word_pattern, sentence, re.IGNORECASE)]
     return filtered_sentences
 
+def extract_sentences_with_and_without_words(text, word1, word2):
+    sentences = sent_tokenize(text)
+    # This regex pattern finds sentences containing word1 but not word2.
+    word_pattern = rf"\b{re.escape(word1)}\b(?!.*\b{re.escape(word2)}\b)"
+    filtered_sentences = [sentence for sentence in sentences if re.search(word_pattern, sentence, re.IGNORECASE)]
+    return filtered_sentences
+
