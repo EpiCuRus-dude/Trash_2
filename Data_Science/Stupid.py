@@ -39,3 +39,17 @@ def extract_sentences_with_any_words(text, words):
     return filtered_sentences
 
 
+
+def extract_sentences_with_all_words(text, words):
+    sentences = sent_tokenize(text)
+
+    word_pattern = rf"(?=.*\b{re.escape(words[0])}\b)"
+    for word in words[1:]:
+        word_pattern += rf"(?=.*\b{re.escape(word)}\b)"
+    word_pattern += r".*"
+    
+    filtered_sentences = [sentence for sentence in sentences if re.search(word_pattern, sentence, re.IGNORECASE)]
+    return filtered_sentences
+
+
+
